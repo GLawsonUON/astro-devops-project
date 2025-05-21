@@ -5,10 +5,14 @@ pipeline {
     DOCKER_IMAGE = 'astro-devops-image'
   }
 
+  tools {
+    nodejs 'Node 24'
+  }
+
   stages {
     stage('Checkout') {
       steps {
-        git branch: 'main', url: 'https://github.com/GLawsonUON/astro-devops-project.git'
+        checkout scm
       }
     }
 
