@@ -34,11 +34,16 @@ pipeline {
       }
     }
 
-    stage('Docker build & run') {
-      steps {
-        sh 'docker build -t $DOCKER_IMAGE .'
-        sh 'docker run -d -p 3000:3000 $DOCKER_IMAGE'
-      }
+// DOCKER DESKTOP FOR WINDOWS AND JENKINS CONTAINER NOT COMPATIBLE
+// CANT SEE DOCKER CLIENT
+// FINISH PIPELINE AFTER BUILD AND TEST
+
+
+//    stage('Docker build & run') {
+//      steps {
+//        sh 'docker build -t $DOCKER_IMAGE .'
+//        sh 'docker run -d -p 3000:3000 $DOCKER_IMAGE'
+//      }
     }
-  }
+//  }
 }
