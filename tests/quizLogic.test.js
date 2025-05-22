@@ -3,7 +3,7 @@ const { checkAnswer, calculateScore, getNextQuestionIndex } = require('../src/ut
 //check some induvidual questions
 
 test('checkAnswer returns true when answer is correct', () => {
-  expect(checkAnswer('B', 'B')).toBe(false);
+  expect(checkAnswer('B', 'B')).toBe(true);
 });
 
 test('checkAnswer returns false when answer is incorrect', () => {
