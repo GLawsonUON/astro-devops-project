@@ -1,4 +1,4 @@
-const { checkAnswer, calculateScore } = require('../src/utils/quizLogic');
+const { checkAnswer, calculateScore, getNextQuestionIndex } = require('../src/utils/quizLogic');
 
 test('checkAnswer returns true when answer is correct', () => {
   expect(checkAnswer('B', 'B')).toBe(true);
@@ -15,4 +15,12 @@ test('calculateScore counts correct answers', () => {
     { correct: true }
   ];
   expect(calculateScore(answers)).toBe(2);
+});
+
+test('getNextQuestionIndex returns next index', () => {
+  expect(getNextQuestionIndex(1, 5)).toBe(2);
+});
+
+test('getNextQuestionIndex returns -1 at end', () => {
+  expect(getNextQuestionIndex(4, 5)).toBe(-1);
 });

@@ -1,32 +1,109 @@
 ---
 const questions = [
-  {
-    question: "What is the capital of France?",
-    choices: ["Berlin", "Paris", "London", "Madrid"],
-    answer: "Paris"
-  },
-  {
-    question: "2 + 2 = ?",
-    choices: ["3", "4", "5", "6"],
-    answer: "4"
-  }
+	{
+		question: "What is the capital of France?",
+		choices: ["Berlin", "Paris", "London", "Madrid"],
+		answer: "Paris",
+	},
+	{
+		question: "2 + 2 = ?",
+		choices: ["3", "4", "5", "6"],
+		answer: "4",
+	},
 ];
 ---
-<html>
-  <head><title>Quiz App</title></head>
-  <body>
-    <h1>Simple Quiz App</h1>
-    <ul>
-      {questions.map(q => (
-        <li>
-          <p>{q.question}</p>
-          <ul>
-            {q.choices.map(choice => (
-              <li><button>{choice}</button></li>
-            ))}
-          </ul>
-        </li>
-      ))}
-    </ul>
-  </body>
+
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Simple Quiz App</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				max-width: 600px;
+				margin: auto;
+				padding: 2rem;
+			}
+			.choice {
+				display: block;
+				margin: 0.5rem 0;
+				padding: 0.5rem;
+				background: #f2f2f2;
+				border: 1px solid #ccc;
+				cursor: pointer;
+			}
+			.choice:hover {
+				background: #ddd;
+			}
+			#result {
+				font-size: 1.2rem;
+				margin-top: 2rem;
+				font-weight: bold;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Simple Quiz App</h1>
+
+		<!-- Hidden JSON data injection -->
+		<script
+			id="astro-questions"
+			type="application/json"
+			set:html={JSON.stringify(questions)}
+		/>
+
+		<div id="quiz">
+			<p id="question"></p>
+			<div id="choices"></div>
+		</div>
+
+		<div id="result" style="display: none;"></div>
+
+		<script type="module">
+			const questions = JSON.parse(
+				document.getElementById("astro-questions").textContent,
+			);
+
+			let current = 0;
+			let score = 0;
+
+			const questionEl = document.getElementById("question");
+			const choicesEl = document.getElementById("choices");
+			const resultEl = document.getElementById("result");
+			const quizEl = document.getElementById("quiz");
+
+			function showQuestion(index) {
+				const q = questions[index];
+				questionEl.textContent = q.question;
+				choicesEl.innerHTML = "";
+
+				q.choices.forEach((choice) => {
+					const btn = document.createElement("button");
+					btn.textContent = choice;
+					btn.className = "choice";
+					btn.onclick = () => handleAnswer(choice, q.answer);
+					choicesEl.appendChild(btn);
+				});
+			}
+
+			function handleAnswer(selected, correct) {
+				if (selected === correct) score++;
+				current++;
+				if (current < questions.length) {
+					showQuestion(current);
+				} else {
+					showResult();
+				}
+			}
+
+			function showResult() {
+				quizEl.style.display = "none";
+				resultEl.style.display = "block";
+				resultEl.textContent = `You scored ${score} out of ${questions.length}.`;
+			}
+
+			// Start quiz
+			showQuestion(current);
+		</script>
+	</body>
 </html>
