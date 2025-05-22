@@ -105,9 +105,15 @@ const questions = [
 			<div id="choices"></div>
 		</div>
 
-		<div id="result" style="display: none;"></div>
+		<div id="result" style="display: none;">
+			<p id="result-text"></p>
+			<button id="restart-btn" class="choice">Restart Quiz</button>
+		</div>
 
 		<script type="module">
+			const restartBtn = document.getElementById("restart-btn");
+			const resultText = document.getElementById("result-text");
+
 			const questions = JSON.parse(
 				document.getElementById("astro-questions").textContent,
 			);
@@ -155,11 +161,19 @@ const questions = [
 			function showResult() {
 				quizEl.style.display = "none";
 				resultEl.style.display = "block";
-				resultEl.textContent = `You scored ${score} out of ${questions.length}.`;
+				resultText.textContent = `You scored ${score} out of ${questions.length}.`;
 			}
 
 			// Start quiz
 			showQuestion(current);
+
+			restartBtn.addEventListener("click", () => {
+				current = 0;
+				score = 0;
+				resultEl.style.display = "none";
+				quizEl.style.display = "block";
+				showQuestion(current);
+			});
 		</script>
 	</body>
 </html>
