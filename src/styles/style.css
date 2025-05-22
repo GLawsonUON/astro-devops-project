@@ -49,3 +49,18 @@ h1 {
 button:focus {
   outline: 2px solid #00ff2f;
 }
+
+#progress-container {
+  background-color: #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  height: 20px;
+}
+
+#progress-bar {
+  height: 100%;
+  width: 0%;
+  background-color: #3b82f6;
+  transition: width 0.3s ease;
+}

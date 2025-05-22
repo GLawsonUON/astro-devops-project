@@ -12,6 +12,46 @@ const questions = [
 		choices: ["3", "4", "5", "6"],
 		answer: "4",
 	},
+	{
+		question: "What color is the sky on a clear day?",
+		choices: ["Green", "Blue", "Red", "Orange"],
+		answer: "Blue",
+	},
+	{
+		question: "Which animal barks?",
+		choices: ["Cat", "Dog", "Cow", "Fish"],
+		answer: "Dog",
+	},
+	{
+		question: "What is 5 x 3?",
+		choices: ["15", "8", "10", "20"],
+		answer: "15",
+	},
+	{
+		question: "What’s the opposite of hot?",
+		choices: ["Cold", "Warm", "Cool", "Boiling"],
+		answer: "Cold",
+	},
+	{
+		question: "What is the 3rd planet from the sun?",
+		choices: ["Venus", "Mars", "Earth", "Jupiter"],
+		answer: "Earth",
+	},
+	{
+		question: "What gas do plants absorb?",
+		choices: ["Oxygen", "Carbon Dioxide", "Nitrogen", "Helium"],
+		answer: "Carbon Dioxide",
+	},
+	{
+		question: "Which day comes after Friday?",
+		choices: ["Monday", "Saturday", "Thursday", "Tuesday"],
+		answer: "Saturday",
+	},
+	{
+		question: "What shape has 4 equal sides?",
+		choices: ["Triangle", "Circle", "Square", "Rectangle"],
+		answer: "Square",
+	},
 ];
 ---
 
@@ -54,6 +94,12 @@ const questions = [
 			set:html={JSON.stringify(questions)}
 		/>
 
+		<!-- Progress bar   -->
+
+		<div id="progress-container">
+			<div id="progress-bar"></div>
+		</div>
+
 		<div id="quiz">
 			<p id="question"></p>
 			<div id="choices"></div>
@@ -73,11 +119,18 @@ const questions = [
 			const choicesEl = document.getElementById("choices");
 			const resultEl = document.getElementById("result");
 			const quizEl = document.getElementById("quiz");
+			const progressBar = document.getElementById("progress-bar");
+
+			function updateProgressBar() {
+				const percentage = (current / questions.length) * 100;
+				progressBar.style.width = `${percentage}%`;
+			}
 
 			function showQuestion(index) {
 				const q = questions[index];
 				questionEl.textContent = q.question;
 				choicesEl.innerHTML = "";
+				updateProgressBar();
 
 				q.choices.forEach((choice) => {
 					const btn = document.createElement("button");
@@ -91,6 +144,7 @@ const questions = [
 			function handleAnswer(selected, correct) {
 				if (selected === correct) score++;
 				current++;
+				updateProgressBar();
 				if (current < questions.length) {
 					showQuestion(current);
 				} else {
