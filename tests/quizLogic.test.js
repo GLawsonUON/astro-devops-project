@@ -1,4 +1,4 @@
-const { checkAnswer, calculateScore } = require('../../utils/quizLogic');
+const { checkAnswer, calculateScore } = require('../src/utils/quizLogic');
 
 test('checkAnswer returns true when answer is correct', () => {
   expect(checkAnswer('B', 'B')).toBe(true);
